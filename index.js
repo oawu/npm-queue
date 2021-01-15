@@ -1,48 +1,61 @@
 /**
  * @author      OA Wu <comdan66@gmail.com>
- * @copyright   Copyright (c) 2015 - 2020, Ginkgo
+ * @copyright   Copyright (c) 2015 - 2020, @oawu/queue
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
 
-const Queue = function(...closures) {
-  if (!(this instanceof Queue))
-    return new Queue(...closures)
+const Queue = function() {
+  if (!(this instanceof Queue)) {
+    return new Queue()
+  }
 
   this.closures = []
-  this.prevs = []
+  this.params = []
   this.isWorking = false
-
-  closures.forEach(this.enqueue.bind(this))
 }
 
-Queue.prototype = { ...Queue.prototype, 
-  get size () {
-    return this.closures.length
-  },
+Queue.prototype = {
+  ...Queue.prototype, 
+
   enqueue (closure) {
     this.closures.push(closure)
-    this.dequeue(...this.prevs)
+    this.dequeue(...this.params)
     return this
   },
-  dequeue (...prevs) {
-    if (this.isWorking) return this;
-    else this.isWorking = true
+  dequeue (...params) {
+    if (this.isWorking) {
+      return this;
+    } else {
+      this.isWorking = true
+    }
 
-    if (this.closures.length) this.closures[0]((...prevs) => (this.prevs = prevs, this.closures.shift(), this.isWorking = false, this.dequeue(...this.prevs)), ...prevs)
-    else this.isWorking = false
+    if (this.closures.length) {
+      const next = (...params) => {
+        this.params = params
+        this.closures.shift()
+        this.isWorking = false
+        this.dequeue(...this.params)
+      }
+
+      next.params = this.params
+
+      this.closures[0](next, ...params)
+    } else {
+      this.isWorking = false
+    }
 
     return this
   },
   push (closure) {
     return this.enqueue(closure)
   },
-  pop (...prevs) {
-    return this.dequeue(...prevs)
+  pop (...params) {
+    return this.dequeue(...params)
   },
   clean () {
     this.closures = []
-    this.prevs = []
+    this.params = []
     this.isWorking = false
   }
 }
@@ -50,5 +63,13 @@ Queue.prototype = { ...Queue.prototype,
 Queue.create = function(...closures) {
   return new Queue(...closures)
 }
+
+let main = null
+
+Object.defineProperty(Queue, 'main', {
+  get: _ => main || (main = new Queue()) })
+
+Object.defineProperty(Queue.prototype, 'size', {
+  get () { return this.closures.length } })
 
 module.exports = Queue
