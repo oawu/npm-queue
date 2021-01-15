@@ -1,0 +1,22 @@
+{
+  "name": "node-quene-func",
+  "version": "1.0.0",
+  "description": "將同步事件整理成 quene，讓事件一個個的執行下去",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comdan66/node-QueueFunc.git"
+  },
+  "keywords": [
+    "queue"
+  ],
+  "author": "OA Wu (comdan66@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/comdan66/node-QueueFunc/issues"
+  },
+  "homepage": "https://github.com/comdan66/node-QueueFunc#readme"
+}
