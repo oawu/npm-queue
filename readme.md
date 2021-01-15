@@ -7,7 +7,9 @@
 
 ## 安裝
 
-`npm install @oawu/queue`
+```shell
+npm install @oawu/queue
+```
 
 ## 使用
 
@@ -17,7 +19,7 @@
 
 queue 4 在程式碼中雖然是先定義了，但因為 timeout 關係，所以會被最晚 enqueue，故會最後執行。
 
-``` javascript
+```javascript
 
   const Queue = require('@oawu/queue.js')
   const queue = new Queue()
@@ -62,7 +64,7 @@ queue 4 在程式碼中雖然是先定義了，但因為 timeout 關係，所以
 
 共享，`@oawu/queue` 內有預設的共用物件，簡單或需共用的環境下可以直接使用，如下範例：
 
-``` javascript
+```javascript
   const Queue = require('@oawu/queue.js')
   const queue = Queue()
 
@@ -73,7 +75,7 @@ queue 4 在程式碼中雖然是先定義了，但因為 timeout 關係，所以
 
 大小，`@oawu/queue` 可以使用 `size` 取得目前剩正在執行與餘未執行的事件，如下範例：
 
-``` javascript
+```javascript
   const Queue = require('@oawu/queue.js')
   const queue = Queue.create()
 
@@ -84,7 +86,7 @@ queue 4 在程式碼中雖然是先定義了，但因為 timeout 關係，所以
 
 清空，`@oawu/queue` 可以使用 `clean` 將目前剩餘未執行的事件全部清空，並且結束執行，直到有新的事件 `enqueue`，如下範例：
 
-``` javascript
+```javascript
   const Queue = require('@oawu/queue.js')
   const queue = new Queue()
 
