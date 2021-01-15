@@ -1,6 +1,6 @@
 {
   "name": "@oawu/queue",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "將同步事件整理成 quene，讓事件一個個的執行下去",
   "main": "index.js",
   "scripts": {
