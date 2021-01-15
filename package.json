@@ -13,7 +13,11 @@
   "keywords": [
     "queue"
   ],
-  "author": "OA Wu (comdan66@gmail.com)",
+  "author": {
+    "name": "OA Wu",
+    "email": "comdan66@gmail.com",
+    "url": "https://www.ioa.tw"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/comdan66/node-Queue/issues"
