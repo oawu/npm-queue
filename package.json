@@ -1,7 +1,7 @@
 {
   "name": "@oawu/queue",
   "version": "1.0.9",
-  "description": "將須同步處理的事件或功能，以 Queue 的方式依序處理，排排站吧，你們這些傢伙！ 🚗… 🚗… 🚗…",
+  "description": "🚗… 將須同步處理的事件或功能，以 Queue 的方式依序處理，排排站吧，你們這些傢伙！",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
