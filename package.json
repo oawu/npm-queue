@@ -1,6 +1,6 @@
 {
   "name": "@oawu/queue",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "🚗… 將須同步處理的事件或功能，以 Queue 的方式依序處理，排排站吧，你們這些傢伙！",
   "main": "index.js",
   "scripts": {
@@ -8,19 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/comdan66/node-Queue.git"
+    "url": "git+https://github.com/oawu/npm-queue.git"
   },
   "keywords": [
     "queue"
   ],
   "author": {
     "name": "OA Wu",
-    "email": "comdan66@gmail.com",
+    "email": "oawu.tw@gmail.com",
     "url": "https://www.ioa.tw"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/comdan66/node-Queue/issues"
+    "url": "https://github.com/oawu/npm-queue/issues"
   },
-  "homepage": "https://github.com/comdan66/node-Queue#readme"
+  "homepage": "https://github.com/oawu/npm-queue#readme"
 }
