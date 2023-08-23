@@ -5,13 +5,13 @@
  * @link        https://www.ioa.tw/
  */
 
-const Queue = function() {
+const Queue = function(...params) {
   if (!(this instanceof Queue)) {
-    return new Queue()
+    return new Queue(...params)
   }
 
   this.closures = []
-  this.params = []
+  this.params = params
   this.isWorking = false
 }
 
