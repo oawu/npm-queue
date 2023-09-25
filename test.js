@@ -9,6 +9,18 @@ const Queue = require('./index.js')
 
 Queue.main
   .enqueue((next, params) => {
+    console.log('=> enqueue 0, params: ', params, next.params)
+    console.log('=> enqueue size: ', Queue.main.size)
+
+    setTimeout(_ => {
+      const params = undefined
+      console.log('=> enqueue 0 finish! params: ', params)
+      next()
+    }, 1000)
+  }, [1,2,3], 'a')
+
+Queue.main
+  .enqueue((next, params) => {
     console.log('=> enqueue 1, params: ', params, next.params)
     console.log('=> enqueue size: ', Queue.main.size)
 

@@ -18,8 +18,8 @@ const Queue = function(...params) {
 Queue.prototype = {
   ...Queue.prototype, 
 
-  enqueue (closure) {
-    this.closures.push(closure)
+  enqueue (closure, ...args) {
+    this.closures.push({ closure, args})
     this.dequeue(...this.params)
     return this
   },
@@ -38,9 +38,9 @@ Queue.prototype = {
         this.dequeue(...this.params)
       }
 
-      next.params = this.params
-
-      this.closures[0](next, ...params)
+      const { closure, args } = this.closures[0]
+      next.params = [...this.params, ...args]
+      closure(next, ...params, ...args)
     } else {
       this.isWorking = false
     }
