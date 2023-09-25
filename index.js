@@ -39,8 +39,8 @@ Queue.prototype = {
       }
 
       const { closure, args } = this.closures[0]
-      next.params = [...this.params, ...args]
-      closure(next, ...params, ...args)
+      next.params = [...args, ...this.params]
+      closure(next, ...args, ...params)
     } else {
       this.isWorking = false
     }
