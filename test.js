@@ -1,6 +1,6 @@
 /**
  * @author      OA Wu <oawu.tw@gmail.com>
- * @copyright   Copyright (c) 2015 - 2022, @oawu/queue
+ * @copyright   Copyright (c) 2015 - 2025, @oawu/queue
  * @license     http://opensource.org/licenses/MIT  MIT License
  * @link        https://www.ioa.tw/
  */
@@ -78,8 +78,6 @@ Queue.main
   }, 'a')
 console.error('set enqueue 2');
 
-  
-
 setTimeout(_ => {
   
   Queue.main
@@ -122,7 +120,6 @@ Queue.main
     }, 1000)    
   })
 console.error('set enqueue 3');
-
 
 setTimeout(_ => {
   

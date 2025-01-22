@@ -101,3 +101,49 @@ queue 4 在程式碼中雖然是先定義了，但因為 timeout 關係，所以
     // ... 不會被執行
   })
 ```
+
+
+## Queue.Dispatch
+
+這是一個可以不斷往 Queue 丟的的功能，並且指定幾個 worker 處理任務
+如下範例：
+
+
+```javascript
+  const Queue = require('@oawu/queue.js')
+  const dispatchQueue = Queue.Dispatch(3) // 指定 3 個 worker 執行任務
+  
+  dispatchQueue
+    .enqueue(next => {
+      console.error('enqueue 1')
+      setTimeout(next, 2000)
+    })
+    .enqueue(next => {
+      console.error('enqueue 2')
+      setTimeout(next, 1000)
+    })
+    .enqueue(next => {
+      console.error('enqueue 3')
+      setTimeout(next, 1300)
+    })
+    .enqueue(next => {
+      console.error('enqueue 4')
+      setTimeout(next, 2000)
+    })
+    .enqueue(next => {
+      console.error('enqueue 5')
+      setTimeout(next, 100)
+    })
+  
+  dispatchQueue
+    .exec(_ => { // 開始執行以上任務
+      console.error('ok')
+    })
+
+  // 以上 1、2、3 會非同步併發執行，而 2 會先結束，接著會加入執行 4，等 3 結束後執行 5，所以依序如下：
+    // 1 2 3
+    // 1 3 4
+    // 1 4 5
+    // 1 4
+    // 4
+```
