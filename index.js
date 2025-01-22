@@ -20,30 +20,30 @@ Queue.prototype = {
 
   enqueue (closure, ...args) {
     this.closures.push({ closure, args})
-    this.dequeue(...this.params)
+    setTimeout(this.dequeue.bind(this))
     return this
   },
-  dequeue (...params) {
+  dequeue () {
     if (this.isWorking) {
       return this;
-    } else {
-      this.isWorking = true
     }
 
-    if (this.closures.length) {
-      const next = (...params) => {
-        this.params = params
-        this.closures.shift()
-        this.isWorking = false
-        this.dequeue(...this.params)
-      }
+    this.isWorking = true
 
-      const { closure, args } = this.closures[0]
-      next.params = [...args, ...this.params]
-      closure(next, ...args, ...params)
-    } else {
+    if (!this.closures.length) {
       this.isWorking = false
+      return this;
     }
+
+    const { closure, args } = this.closures[0]
+    const next = (...params) => {
+      this.params = params
+      this.isWorking = false
+      this.closures.shift()
+      this.dequeue()
+    }
+    next.params = [...args, ...this.params]
+    closure(next, ...args, ...this.params)
 
     return this
   },
