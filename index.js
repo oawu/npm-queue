@@ -36,14 +36,35 @@ Queue.prototype = {
     }
 
     const { closure, args } = this.closures[0]
-    const next = (...params) => {
-      this.params = params
-      this.isWorking = false
-      this.closures.shift()
-      this.dequeue()
+
+    if (closure.constructor.name === 'AsyncFunction') {
+      closure(...args, ...this.params)
+        .then(params => this.params = [params])
+        .catch(error => this.params = [error])
+        .finally(_ => {
+          this.isWorking = false
+          this.closures.shift()
+          this.dequeue()
+        })
+    } else {
+      let isRun = false
+      const next = (...params) => {
+        if (isRun) { return }
+        isRun = true
+
+        this.params = params
+        this.isWorking = false
+        this.closures.shift()
+        this.dequeue()
+      }
+      next.params = [...args, ...this.params]
+      
+      try {
+        closure(next, ...args, ...this.params)
+      } catch (error) {
+        next(error)
+      }
     }
-    next.params = [...args, ...this.params]
-    closure(next, ...args, ...this.params)
 
     return this
   },
@@ -122,10 +143,30 @@ Queue.Dispatch.prototype = { ...Queue.Dispatch.prototype,
 
     this.workingCount += 1
 
-    setTimeout(_ => closure(_ => {
-      this.workingCount -= 1
-      this._dequeue()
-    }))
+    if (closure.constructor.name === 'AsyncFunction') {
+      closure()
+        .then(_ => {})
+        .catch(_ => {})
+        .finally(_ => {
+          this.workingCount -= 1
+          this._dequeue()
+        })
+    } else {
+      setTimeout(_ => {
+        let isRun = false
+        const next = _ => {
+          if (isRun) { return }
+          isRun = true
+          this.workingCount -= 1
+          this._dequeue()
+        }
+        try {
+          closure(next)
+        } catch (_) {
+          next()
+        }
+      })
+    }
 
     return this
   },
